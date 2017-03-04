@@ -1,7 +1,7 @@
 import React from "react";
 
-
-export default class Header extends React.PureComponent {
+// Not found page component
+export default class NotFound extends React.Component {
   // render
   render() {
     return (
