@@ -18,6 +18,10 @@ module.exports = {
     publicPath: 'js/',
     filename: 'bundle.js',
   },
+  resolve: {
+    extensions: ['', '.js', '.jsx'],
+    modulesDirectories : ['src' , 'node_modules']
+  },
   module: {
     loaders: [
       {

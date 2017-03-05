@@ -9,12 +9,15 @@ export default class Header extends React.PureComponent {
     return (
       <div className="main-nav__fixed">
         <div className="self-quote__intro">
-            <p>Amine Aydoun</p>
+            <p><Link to="/">Amine Aydoun</Link></p>
             <p>Some Quote Here</p>
         </div>
-        <ul className="main-menu__list">
+        <ul className="nav main-menu__list">
             <li>
-                <Link to="/home">Blog</Link>
+                <Link to="/">Blog</Link>
+            </li>
+            <li>
+                <Link to="/work">Work</Link>
             </li>
             <li>
                 <Link to="/contact">Contact</Link>

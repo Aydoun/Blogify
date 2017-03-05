@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ProgressBar } from "react-bootstrap";
-import Menu from "../../components/common/Menu";
-import Header from '../../components/Header/index.jsx'
-import "../../stylesheets/main.css";
+import { Grid , Row , Col , ProgressBar } from "react-bootstrap";
+import Menu from "components/common/Menu";
+import Header from 'components/Header';
+import "stylesheets/main.css";
 
 // App component
 export class App extends React.Component {
@@ -24,10 +24,10 @@ export class App extends React.Component {
     // }
     return (
       <div>
-          <Header />
-          <div className="container">
-              {children}
-          </div>
+        <Header />
+        <div className="container">
+            {children}
+        </div>
       </div>
     );
   }

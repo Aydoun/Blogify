@@ -1,9 +1,11 @@
 import React from "react";
 import { Router, Route, IndexRoute } from "react-router";
 import { history } from "./store.js";
-import App from "./views/App/index.jsx";
-import Home from "./views/Home/index.jsx";
-import NotFound from "./views/NotFound/index.jsx";
+import App from "views/App";
+import Home from "views/Home";
+import Contact from 'views/Contact';
+import Work from 'views/Work';
+import NotFound from "views/NotFound";
 
 // build the router
 // <IndexRoute component={Home}/>
@@ -13,6 +15,8 @@ const router = (
   <Router history={history}>
     <Route path="/" component={App}>
         <IndexRoute component={Home}/>
+        <Route path="/contact" component={Contact}/>
+        <Route path="/work" component={Work}/>
     </Route>
     <Route path="*" component={NotFound}/>
   </Router>

@@ -1,28 +1,40 @@
 import React from "react";
 import { connect } from "react-redux";
+import SI from 'components/SelfIntroduction';
+import Post from 'components/Post';
+import './index.css';
 
-
-// Home component
 export class Home extends React.Component {
-  // pre-render logic
   componentDidMount() {
-    // the first time we load the app, we need that users list
-    //this.props.dispatch({type: 'USERS_FETCH_LIST'});
+
     console.log('Home Mounted');
   }
 
-  // render
   render() {
+    const fake = [1, 1, 1];
     return (
       <div>
-          <p>Call Me Home</p>
+          <SI />
+          <div className="home-container">
+            <ul>
+              {
+                fake.map(function(pt , index){
+                    return(
+                      <li key={index}>
+                          <Post  />
+                      </li>
+                    )
+                })
+              }
+              </ul>
+          </div>
+
       </div>
 
     );
   }
 }
 
-// export the connected class
 function mapStateToProps(state) {
   return {
   };
