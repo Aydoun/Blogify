@@ -3,23 +3,16 @@ import { connect } from "react-redux";
 import './index.css';
 
 export class Post extends React.Component {
-  componentDidMount() {
-
-    console.log('Home Mounted');
-  }
-
   render() {
     return (
       <div>
-          
           <div className="post-title">
-              <h3>Hey I'm a Title</h3>
+              <h3>{this.props.title}</h3>
           </div>
           <div className="post-description">
-              <p>I'm Description</p>
+              <p>{this.props.body}</p>
           </div>
       </div>
-
     );
   }
 }

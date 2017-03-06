@@ -6,6 +6,7 @@ import './index.css';
 export default class SI extends React.PureComponent {
 
   render() {
+    console.log('SI Rendered')
     return (
       <div className="self-introduction">
           <Grid>

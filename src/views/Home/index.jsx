@@ -1,30 +1,37 @@
 import React from "react";
+import {bindActionCreators} from 'redux';
 import { connect } from "react-redux";
 import SI from 'components/SelfIntroduction';
+import {getList} from 'actions/posts';
 import Post from 'components/Post';
 import './index.css';
 
 export class Home extends React.Component {
   componentDidMount() {
 
-    console.log('Home Mounted');
+    //console.log('Home Mounted');
+    console.log('this. props' , this.props);
+    this.props.homeActions.getList({});
   }
 
   render() {
     const fake = [1, 1, 1];
+    console.log('Home Rendered');
+    const {list} = this.props;
+
     return (
       <div>
           <SI />
           <div className="home-container">
             <ul>
               {
-                fake.map(function(pt , index){
+                Array.isArray(list) ? list.map(function(item){
                     return(
-                      <li key={index}>
-                          <Post  />
+                      <li key={item.id}>
+                          <Post title={item.title} body={item.body}/>
                       </li>
                     )
-                })
+                }) : null
               }
               </ul>
           </div>
@@ -36,7 +43,16 @@ export class Home extends React.Component {
 }
 
 function mapStateToProps(state) {
+  console.log('state ' , state);
   return {
+      list : state.posts.postList
   };
 }
-export default connect(mapStateToProps)(Home);
+
+function mapDispatchToProps(dispatch) {
+  return {
+      homeActions : bindActionCreators({getList}, dispatch)
+  }
+}
+
+export default connect(mapStateToProps , mapDispatchToProps)(Home);
