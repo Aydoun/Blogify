@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Grid , Row , Col , ProgressBar } from "react-bootstrap";
-import Menu from "components/common/Menu";
 import Header from 'components/Header';
 import "stylesheets/main.css";
 

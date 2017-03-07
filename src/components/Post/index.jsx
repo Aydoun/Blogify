@@ -7,7 +7,7 @@ export class Post extends React.Component {
     return (
       <div>
           <div className="post-title">
-              <h3>{this.props.title}</h3>
+              <h3><a>{this.props.title}</a></h3>
           </div>
           <div className="post-description">
               <p>{this.props.body}</p>

@@ -1,5 +1,8 @@
 .home-container{
-    margin: 52px 0;
+    margin: 7px 0;
+    background: #fff;
+    padding: 3px 50px;
+    border-radius: 12px;
 }
 
 .home-container ul{
