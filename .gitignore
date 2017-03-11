@@ -1,4 +1,8 @@
 .idea/
-node_modules/
-public/js/
-public/css/
+Client/node_modules/
+Back-End/node_modules/
+Back-End/swagger-ui
+Back-End/Public
+Back-End/dist
+Client/public/js/
+Client/public/css/

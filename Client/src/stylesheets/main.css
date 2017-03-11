@@ -60,6 +60,7 @@ ul.main-menu__list li{
     padding: 7px 0px;
 }
 
-/*th {
-  background-image: url('/media/pattern.jpg');
-}*/
+
+.lolipop{
+    background:yellow;
+}
