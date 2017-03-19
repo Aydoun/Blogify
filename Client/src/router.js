@@ -4,6 +4,7 @@ import { history } from "./store.js";
 import App from "views/App";
 import Home from "views/Home";
 import Contact from 'views/Contact';
+import ReadPost from 'views/PostRead';
 import Work from 'views/Work';
 import NotFound from "views/NotFound";
 
@@ -16,6 +17,7 @@ const router = (
     <Route path="/" component={App}>
         <IndexRoute component={Home}/>
         <Route path="/contact" component={Contact}/>
+        <Route path="/posts/:id" component={ReadPost}/>
         <Route path="/work" component={Work}/>
     </Route>
     <Route path="*" component={NotFound}/>

@@ -1,9 +1,10 @@
 import React from "react";
 import {bindActionCreators} from 'redux';
 import { connect } from "react-redux";
+import {Link , browserHistory} from 'react-router';
 import { Pager , Pagination , ProgressBar } from "react-bootstrap";
 import SI from 'components/SelfIntroduction';
-import {getList} from 'actions/posts';
+import {getList , getOnePost} from 'actions/posts';
 import Post from 'components/Post';
 import './index.css';
 
@@ -14,15 +15,19 @@ const Home = React.createClass({
         }
     },
     componentDidMount() {
-      //console.log('Home Mounted');
-      //console.log('this. props' , this.props);
         this.props.homeActions.getList({});
     },
     onSelect(activePage){
         this.setState({activePage});
     },
+    loadPost(_id){
+        console.log('loading Post');
+        this.props.homeActions.getOnePost({id : _id} , function(){
+            browserHistory.push("/posts/" + _id);
+        });
+    },
     render() {
-        const fake = [1, 1, 1];
+        var _this = this;
         const {list , pending} = this.props;
         const {activePage} = this.state;
         if (pending) {
@@ -33,16 +38,20 @@ const Home = React.createClass({
           <div>
               <SI />
               <div className="home-container">
-                <ul className="post-list">
-                  {
-                    Array.isArray(list) ? list.slice((activePage - 1) * 5 , 5 * activePage).map(function(item){
-                        return(
-                          <li key={item.id}>
-                              <Post title={item.title} body={item.body}/>
-                          </li>
-                        )
-                    }) : null
-                  }
+                 <ul className="post-list">
+                     {
+                        Array.isArray(list) ? list.slice((activePage - 1) * 5 , 5 * activePage).map(function(item){
+                            return(
+                              <Link to="#" onClick={() => _this.loadPost(item.id)} key={item.id}>
+                                <li>
+                                  <div className="post-wrapper">
+                                      <Post title={item.title} body={item.body}/>
+                                  </div>
+                                </li>
+                              </Link>
+                            )
+                        }) : null
+                      }
                   </ul>
                   <Pagination
                     prev
@@ -51,7 +60,7 @@ const Home = React.createClass({
                     last
                     ellipsis
                     boundaryLinks
-                    items={list ? list.length / 5 : 0}
+                    items={list ? list.length / 10 : 0}
                     activePage={activePage}
                     onSelect={this.onSelect} />
               </div>
@@ -69,62 +78,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-      homeActions : bindActionCreators({getList}, dispatch)
+      homeActions : bindActionCreators({getList , getOnePost}, dispatch)
   }
 }
 
 export default connect(mapStateToProps , mapDispatchToProps)(Home);
-
-// export class Home extends React.Component {
-//   constructor(props){
-//         super(props);
-//         this.state={activePage : 1}
-//   }
-//
-//   componentDidMount() {
-//
-//     //console.log('Home Mounted');
-//     //console.log('this. props' , this.props);
-//     this.props.homeActions.getList({});
-//   }
-//
-//   onSelect(activePage){
-//       console.log('this ' , this);
-//       //this.setState({activePage});
-//   }
-//
-//   render() {
-//       const fake = [1, 1, 1];
-//       const {list , pending} = this.props;
-//       const {activePage} = this.state;
-//
-//       if (pending) {
-//           return <ProgressBar active now={100}/>
-//       }
-//
-//       return (
-//         <div>
-//             <SI />
-//             <div className="home-container">
-//               <ul>
-//                 {
-//                   Array.isArray(list) ? list.slice((activePage - 1) * 10 , 10).map(function(item){
-//                       return(
-//                         <li key={item.id}>
-//                             <Post title={item.title} body={item.body}/>
-//                         </li>
-//                       )
-//                   }) : null
-//                 }
-//                 </ul>
-//                 <Pagination
-//                   bsSize="small"
-//                   items={10}
-//                   activePage={activePage}
-//                   onSelect={this.onSelect} />
-//             </div>
-//
-//         </div>
-//     );
-//   }
-// }
