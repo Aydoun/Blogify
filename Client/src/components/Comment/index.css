@@ -1,0 +1,16 @@
+.comment-form {
+    background: #fff;
+    margin: 10px 0px;
+    padding: 22px;
+}
+
+.comment-list {
+    background: #fff;
+    padding: 20px 1px;
+    border-radius: 12px;
+}
+
+.comment-list li {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 32px;
+}

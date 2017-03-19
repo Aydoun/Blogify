@@ -44,3 +44,22 @@ export function getOnePost(params , next){
         });
 		}
 }
+
+export function getPostComments(params){
+		return function(dispatch, getState) {
+				var url = 'http://jsonplaceholder.typicode.com/posts/' + params.id + '/comments';
+
+        dispatch({
+            type:DUPLICATE_POST_ACTION,
+            pending : true
+        });
+
+        GetRequest(url , {} , function(data){
+            dispatch({
+                type:DUPLICATE_POST_ACTION,
+                comments : data,
+                pending:false
+            });
+        });
+		}
+}

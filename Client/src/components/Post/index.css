@@ -1,7 +1,11 @@
 .post-title{
-    color:#EA495F
+   color: #ffa500;
 }
 
 .post-description{
     color:#29363B;
+}
+
+.post-comp__wrapper{
+    position : relative;
 }

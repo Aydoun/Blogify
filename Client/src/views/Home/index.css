@@ -5,6 +5,18 @@
     padding:0;
 }
 
+.post-serial{
+    background: #f5f5f5;
+    position: absolute;
+    padding: 9px 17px;
+    border-radius: 10px;
+    color: #222;
+    right: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+}
+
 ul.post-list{
 }
 
@@ -16,11 +28,7 @@ ul.post-list li{
     border-right: 3px solid orange;
 }
 
-ul.post-list li:hover{
-    background:#f5f5f5;
-}
-
-
 ul.post-list div.post-wrapper{
     padding: 20px 54px;
+    position: relative;
 }

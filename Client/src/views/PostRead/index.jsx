@@ -2,7 +2,10 @@ import React from "react";
 import {bindActionCreators} from 'redux';
 import { connect } from "react-redux";
 import {Link , browserHistory} from 'react-router';
-import { Pager , Pagination , ProgressBar } from "react-bootstrap";
+import { ProgressBar , Form , FormControl , Button ,ControlLabel , FormGroup } from "react-bootstrap";
+import Comment from 'components/Comment';
+import {getPostComments} from 'actions/posts';
+import {DeepGet} from 'utils';
 import './index.css';
 
 const ReadPost = React.createClass({
@@ -11,22 +14,57 @@ const ReadPost = React.createClass({
         }
     },
     componentDidMount() {
+        this.props.readPosts.getPostComments({id : this.props.params.id});
     },
     onSelect(activePage){
     },
-    loadPost(_id){
-
-    },
     render() {
         var _this = this;
-        const {item} = this.props;
+        const {item , comments} = this.props;
 
         return (
-          <div className="read-post__wrapper">
-              <h3>{item.title}</h3>
+          <div>
+            <div className="read-post__wrapper">
+                <h3>{DeepGet(item , ['title'])}</h3>
 
-              <p>{item.body}</p>
+                <p>{DeepGet(item , ['body'])}</p>
+            </div>
+            <div className="comment-wrapper">
+                <div className="comment-form">
+                  <h3>Comment Box</h3><hr/>
+                  <Form >
+                    <FormGroup controlId="formInlineName">
+                      <ControlLabel>NickName</ControlLabel>
+                      {' '}
+                      <FormControl type="text"  />
+                    </FormGroup>
+                    {' '}
+                    <FormGroup controlId="formInlineEmail">
+                      <ControlLabel>Comment</ControlLabel>
+                      {' '}
+                      <FormControl componentClass="textarea"  />
+                    </FormGroup>
+                    {' '}
+                    <Button bsStyle="primary">Post</Button>
+                  </Form>
+                </div>
+                <div className="comment-list">
+                  <ul>
+                  {
+
+                    
+
+                      Array.isArray(comments) ? comments.map(function(item , index){
+                          return <li key={index}>
+                              <Comment data={item} />
+                          </li>
+                      }) : null
+                  }
+                  </ul>
+                </div>
+            </div>
           </div>
+
       );
     }
 });
@@ -34,12 +72,13 @@ const ReadPost = React.createClass({
 function mapStateToProps(state) {
   return {
       item : state.posts.onePost,
+      comments : state.posts.comments
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-
+      readPosts : bindActionCreators({getPostComments} , dispatch)
   }
 }
 
