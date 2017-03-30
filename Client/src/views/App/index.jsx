@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Grid , Row , Col , ProgressBar } from "react-bootstrap";
 import Header from 'components/Header';
+import 'font-awesome/css/font-awesome.css';
 import "stylesheets/main.css";
 
 // App component

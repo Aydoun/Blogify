@@ -3,6 +3,7 @@ var logger = require('morgan');
 var argv = require('minimist')(process.argv.slice(2));
 var compression = require ('compression');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 var routes = require('./app/routes');
 var home = require('./app/routes/home');
 var app = express();
@@ -17,6 +18,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api", subpath);
+subpath.use(cors());
 subpath.use('/', routes);
 subpath.use('*', home);
 

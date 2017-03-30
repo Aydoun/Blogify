@@ -4,20 +4,10 @@ import { connect } from "react-redux";
 import {Link , browserHistory} from 'react-router';
 import { ProgressBar , Form , FormControl , Button ,ControlLabel , FormGroup } from "react-bootstrap";
 import Comment from 'components/Comment';
-import {getPostComments} from 'actions/posts';
 import {DeepGet} from 'utils';
 import './index.css';
 
 const ReadPost = React.createClass({
-    getInitialState(){
-        return {
-        }
-    },
-    componentDidMount() {
-        this.props.readPosts.getPostComments({id : this.props.params.id});
-    },
-    onSelect(activePage){
-    },
     render() {
         var _this = this;
         const {item , comments} = this.props;
@@ -27,7 +17,7 @@ const ReadPost = React.createClass({
             <div className="read-post__wrapper">
                 <h3>{DeepGet(item , ['title'])}</h3>
 
-                <p>{DeepGet(item , ['body'])}</p>
+                <p>{DeepGet(item , ['content'])}</p>
             </div>
             <div className="comment-wrapper">
                 <div className="comment-form">
@@ -51,14 +41,13 @@ const ReadPost = React.createClass({
                 <div className="comment-list">
                   <ul>
                   {
-
-                    
-
                       Array.isArray(comments) ? comments.map(function(item , index){
-                          return <li key={index}>
-                              <Comment data={item} />
-                          </li>
-                      }) : null
+                          return (
+                              <li key={index}>
+                                <Comment data={item} />
+                              </li>
+                          )
+                      }) : <ProgressBar active now={100}/>
                   }
                   </ul>
                 </div>
@@ -78,7 +67,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-      readPosts : bindActionCreators({getPostComments} , dispatch)
+      readPosts : bindActionCreators({} , dispatch)
   }
 }
 

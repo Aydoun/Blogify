@@ -42,13 +42,10 @@ const Home = React.createClass({
                      {
                         Array.isArray(list) ? list.slice((activePage - 1) * 5 , 5 * activePage).map(function(item , index){
                             return(
-                              <Link to="#" onClick={() => _this.loadPost(item.id)} key={item.id}>
-                                <li>
+                              <Link to="#" onClick={() => _this.loadPost(item._id)} key={item._id}>
+                                <li >
                                   <div className="post-wrapper">
-                                      <div className="post-serial">
-                                          {(index + (activePage - 1) * 5)}
-                                      </div>
-                                      <Post title={item.title} body={item.body}/>
+                                      <Post title={item.title} body={item.content}/>
                                   </div>
                                 </li>
                               </Link>
