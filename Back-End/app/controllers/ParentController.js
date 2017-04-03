@@ -1,4 +1,10 @@
-var Parent = function(){};
+function Parent(){}
 
+Parent.prototype.formatter = function (msg , err = false){
+    return {
+        data : msg,
+        error : err
+    }
+}
 
-module.export = Parent;
+module.exports = Parent;

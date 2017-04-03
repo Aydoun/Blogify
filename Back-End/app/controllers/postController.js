@@ -1,5 +1,7 @@
 var postModel = require('../models/postModel');
-var _ = require('lodash');
+var {Formatter} = require('../lib');
+var reject = require('lodash/reject');
+
 
 exports.get = function (req, res , next){
   var query = {};
@@ -7,7 +9,7 @@ exports.get = function (req, res , next){
     function (err, data) {
       if (err) return res.status(200).send({error:true , message : err});
 
-      return res.status(200).send(Object.assign(data , {error : false}));
+      return res.status(200).send(Formatter(data));
     }
   );
 }
@@ -48,7 +50,6 @@ exports.update = function (req, res, next) {
 	});
 };
 
-
 exports.remove = function (req, res, next) {
 	var id = req.params.id;
 
@@ -69,6 +70,8 @@ exports.comment = function(req, res , next) {
       nick_name : body.nick_name
     }
 
+    console.log('Comment Body ' , commentBody);
+
     var post = postModel.findOne({_id: postId} , function(err , data){
         data.comments.push(commentBody);
         data.save(function(_err , _data){
@@ -82,49 +85,25 @@ exports.comment = function(req, res , next) {
 exports.delComment = function(req, res , next) {
     var postId = req.params.id;
     var commentId = req.query.commentId;
-    //res.status(200).send({status:false , message:req.query});return ;
+
     if (!commentId) {
         res.status(200).send({status:false , message:'Incomplete Paramters'});
         return ;
     }
 
-
-    //return false;
-
     var post = postModel.findOne({_id: postId} , function(err , data){
-        //data.comments.push(commentBody);
         if (data != null) {
-            //console.log('Previous Length : ' , data.comments.length);
-            _.remove(data.comments, function(n) {
+            data.comments = reject(data.comments, function(n) {
               return n._id == commentId;
             });
-
-            //console.log('new comments ');
-
-            //console.log('New Length : ' , data.comments.length);
 
             data.save(function(_err , _data){
                 if (_err) console.log('err ' , _err);
 
-                res.status(200).send({status:true , message:'Comment Deleted'});
+                res.status(200).send({status:true , message:_data});
             });
-
-            //res.status(200).send({status:true , message:data.comments});
-            // data.save(function(_err , _data){
-            //     if (_err) res.status(200).send({status:true , message:_err});
-            //
-            //     res.status(200).send({status:true , message:'Comment Deleted'});
-            // });
         } else {
             res.status(200).send({status:false , message:'Entry Doesn\'t Exist'});
         }
-
-
-
-        // data.save(function(_err , _data){
-        //     if (_err) console.log('err ' , err);
-        //
-        //     res.status(200).send({status:false , message:_data});
-        // });
     });
 }

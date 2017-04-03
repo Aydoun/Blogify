@@ -5,7 +5,7 @@ var Comments = new Schema({
 	content: {type: String},
 	nick_name: {type: String},
 	comment_date: {type : Date}
-})
+});
 
 module.exports = mongoose.model('post', new Schema({
 	title: {type: String},
