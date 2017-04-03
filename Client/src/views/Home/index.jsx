@@ -1,7 +1,7 @@
 import React from "react";
 import {bindActionCreators} from 'redux';
 import { connect } from "react-redux";
-import {Link , browserHistory} from 'react-router';
+import {Link} from 'react-router';
 import { Pager , Pagination , ProgressBar } from "react-bootstrap";
 import SI from 'components/SelfIntroduction';
 import {getList , getOnePost} from 'actions/posts';
@@ -20,12 +20,6 @@ const Home = React.createClass({
     onSelect(activePage){
         this.setState({activePage});
     },
-    loadPost(_id){
-        console.log('loading Post');
-        this.props.homeActions.getOnePost({id : _id} , function(){
-            browserHistory.push("/posts/" + _id);
-        });
-    },
     render() {
         var _this = this;
         const {list , pending} = this.props;
@@ -42,7 +36,7 @@ const Home = React.createClass({
                      {
                         Array.isArray(list) ? list.slice((activePage - 1) * 5 , 5 * activePage).map(function(item , index){
                             return(
-                              <Link to="#" onClick={() => _this.loadPost(item._id)} key={item._id}>
+                              <Link to={"/posts/" + item._id} key={item._id}>
                                 <li >
                                   <div className="post-wrapper">
                                       <Post title={item.title} body={item.content}/>
@@ -60,7 +54,7 @@ const Home = React.createClass({
                     last
                     ellipsis
                     boundaryLinks
-                    items={list ? list.length / 10 : 0}
+                    items={list ? list.length / 5 + 1: 0}
                     activePage={activePage}
                     onSelect={this.onSelect} />
               </div>

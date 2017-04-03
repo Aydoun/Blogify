@@ -1,16 +1,26 @@
 import React from "react";
 import {bindActionCreators} from 'redux';
 import { connect } from "react-redux";
-import {Link , browserHistory} from 'react-router';
+import {Link } from 'react-router';
 import { ProgressBar , Form , FormControl , Button ,ControlLabel , FormGroup } from "react-bootstrap";
+import {getOnePost , deleteComment} from 'actions/posts';
 import Comment from 'components/Comment';
 import {DeepGet} from 'utils';
 import './index.css';
 
 const ReadPost = React.createClass({
+    componentDidMount(){
+      this.props.readPosts.getOnePost({id : this.props.params.id});
+    },
+    deleteComment(id){
+        this.props.commentAction.deleteComment(this.props.params.id , id);
+    },
     render() {
         var _this = this;
-        const {item , comments} = this.props;
+        const {item , comments , pending} = this.props;
+        if (pending) {
+            return <ProgressBar active now={100}/>
+        }
 
         return (
           <div>
@@ -44,7 +54,7 @@ const ReadPost = React.createClass({
                       Array.isArray(comments) ? comments.map(function(item , index){
                           return (
                               <li key={index}>
-                                <Comment data={item} />
+                                <Comment data={item} deleteComment={_this.deleteComment}/>
                               </li>
                           )
                       }) : <ProgressBar active now={100}/>
@@ -61,13 +71,15 @@ const ReadPost = React.createClass({
 function mapStateToProps(state) {
   return {
       item : state.posts.onePost,
-      comments : state.posts.comments
+      comments : state.posts.comments,
+      pending : state.posts.pending
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-      readPosts : bindActionCreators({} , dispatch)
+      readPosts : bindActionCreators({getOnePost} , dispatch),
+      commentAction : bindActionCreators({deleteComment} , dispatch)
   }
 }
 

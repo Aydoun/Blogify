@@ -16,6 +16,22 @@ export function GetRequest(url , params , next){
     });
 }
 
+export function DeleteRequest(url , params , next){
+    axios.delete(url , {
+        params : params,
+      }
+    ).then(function (response) {
+        if (response.status == 200) {
+            next(response.data);
+        } else {
+            console.log('status  !== 200');
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
 export function PostRequest(url , data , next ){
     axios.post(url, data,{
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
